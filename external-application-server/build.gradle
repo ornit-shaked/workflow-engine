@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.oshaked'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile files('C://projects/other/workflow-embedded-engine/workflow-embedded-engine-client/build/libs/workflow-embedded-engine-client-0.0.1-SNAPSHOT.jar')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "org.springframework.boot:spring-boot-starter-cloud-connectors"
+
+    compile 'org.camunda.bpm:camunda-external-task-client:1.2.0'
+}

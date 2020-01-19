@@ -1,0 +1,24 @@
+server.port: 8095
+management:
+  endpoint:
+    flowable:
+      enabled: true
+  web:
+    exposure:
+      include: '*'
+  security:
+    enabled: false
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:flowable
+    driverClassName: org.h2.Driver
+    username: flowable
+    password: flowable
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: validate

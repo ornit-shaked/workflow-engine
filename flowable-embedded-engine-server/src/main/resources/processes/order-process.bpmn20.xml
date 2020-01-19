@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="order-process" name="order-process" isExecutable="true">
+    <startEvent id="startEvent1" name="Order Placed"></startEvent>
+    <serviceTask id="InitiatePayment" name="Initiate Payment" flowable:class="com.oshaked.flowable.service.InitiatePaymentDelegate"></serviceTask>
+    <sequenceFlow id="sid-39098459-F009-4DCE-964F-5A014AA360CF" sourceRef="startEvent1" targetRef="InitiatePayment"></sequenceFlow>
+    <exclusiveGateway id="sid-B7AEA65B-A50C-4062-A887-13A1E0CFFB77" default="sid-E49989CB-4A48-42DF-B6B1-26997BC8B048"></exclusiveGateway>
+    <sequenceFlow id="sid-96F30796-2B21-4E38-B44B-515BEE6792AE" sourceRef="InitiatePayment" targetRef="sid-B7AEA65B-A50C-4062-A887-13A1E0CFFB77"></sequenceFlow>
+    <endEvent id="sid-971FA21D-7B7E-4F47-B54A-2442552347A8" name="OrderFailed">
+      <errorEventDefinition></errorEventDefinition>
+    </endEvent>
+    <subProcess id="sid-9A03B061-CB3E-4F2C-BB3D-5200DD59BED8" name="subProcess">
+      <multiInstanceLoopCharacteristics isSequential="true">
+        <loopDataInputRef>arrParallel</loopDataInputRef>
+      </multiInstanceLoopCharacteristics>
+      <startEvent id="sid-A5AFCE62-260F-4C3C-9CF6-B5EF02BA3476"></startEvent>
+      <serviceTask id="sid-64F6CC68-79B0-42F5-A3F0-660C80247F17" name="WarehouseOrder" default="sid-BDB2C7DF-A1B4-484F-9B9C-CC7FCFB000AA" flowable:class="com.oshaked.flowable.service.WarehouseOrderDelegate"></serviceTask>
+      <endEvent id="sid-C7C1C11D-9B74-407B-9774-24E9F920ECED" name="Order fulfilled"></endEvent>
+      <scriptTask id="sid-5D912BD2-F7BC-4ED4-A587-D256A2127689" name="ShipProduct" scriptFormat="javascript">
+        <script><![CDATA[var system = java.lang.System;
+var sum = price*items;
+system.out.println('This is internal script');
+execution.setVariable('sum', sum);]]></script>
+      </scriptTask>
+      <exclusiveGateway id="sid-EC013F34-A43E-4125-A978-5C1BEDF07CA8" default="sid-BBD260C5-A194-4BCA-AF0C-8AC82FD59507"></exclusiveGateway>
+      <serviceTask id="sid-04F4AB72-D8DC-4E72-B016-EB40CD44CE66" name="SupplierOrder" flowable:type="shell">
+        <extensionElements>
+          <flowable:field name="command">
+            <flowable:string><![CDATA[cmd]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="arg1">
+            <flowable:string><![CDATA[/c]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="arg2">
+            <flowable:string><![CDATA[echo]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="arg3">
+            <flowable:string><![CDATA[EchoTest]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="wait">
+            <flowable:string><![CDATA[true]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="outputVariable">
+            <flowable:string><![CDATA[resultVar]]></flowable:string>
+          </flowable:field>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="sid-9F5D3B76-A36B-4C98-9C4F-7BE931CD17AC" sourceRef="sid-5D912BD2-F7BC-4ED4-A587-D256A2127689" targetRef="sid-C7C1C11D-9B74-407B-9774-24E9F920ECED"></sequenceFlow>
+      <sequenceFlow id="sid-BDB2C7DF-A1B4-484F-9B9C-CC7FCFB000AA" name="No" sourceRef="sid-64F6CC68-79B0-42F5-A3F0-660C80247F17" targetRef="sid-EC013F34-A43E-4125-A978-5C1BEDF07CA8"></sequenceFlow>
+      <sequenceFlow id="sid-3C52C0BE-9247-4E90-8BFD-2ED5B69C3E9F" sourceRef="sid-04F4AB72-D8DC-4E72-B016-EB40CD44CE66" targetRef="sid-5D912BD2-F7BC-4ED4-A587-D256A2127689"></sequenceFlow>
+      <sequenceFlow id="sid-B2C626E7-9EA2-47BE-8A36-3C908660C826" sourceRef="sid-A5AFCE62-260F-4C3C-9CF6-B5EF02BA3476" targetRef="sid-64F6CC68-79B0-42F5-A3F0-660C80247F17"></sequenceFlow>
+      <sequenceFlow id="sid-D093A890-189E-4218-926A-77E64DDC0822" sourceRef="sid-EC013F34-A43E-4125-A978-5C1BEDF07CA8" targetRef="sid-5D912BD2-F7BC-4ED4-A587-D256A2127689">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${success==true}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="sid-BBD260C5-A194-4BCA-AF0C-8AC82FD59507" sourceRef="sid-EC013F34-A43E-4125-A978-5C1BEDF07CA8" targetRef="sid-04F4AB72-D8DC-4E72-B016-EB40CD44CE66"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="sid-E49989CB-4A48-42DF-B6B1-26997BC8B048" name="No" sourceRef="sid-B7AEA65B-A50C-4062-A887-13A1E0CFFB77" targetRef="sid-971FA21D-7B7E-4F47-B54A-2442552347A8"></sequenceFlow>
+    <sequenceFlow id="sid-A1699E54-C6F2-4E7B-A5A1-4906C98438A6" name="Yes" sourceRef="sid-B7AEA65B-A50C-4062-A887-13A1E0CFFB77" targetRef="sid-9A03B061-CB3E-4F2C-BB3D-5200DD59BED8">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${success==true}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+</definitions>

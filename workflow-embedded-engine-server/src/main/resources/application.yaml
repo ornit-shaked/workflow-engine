@@ -1,0 +1,21 @@
+server.port: 8084
+
+camunda.bpm:
+  admin-user:
+    id: demo
+    password: demo
+    firstName: demo
+  job-execution:
+    enabled: true
+
+spring:
+  jersey:
+    application-path: engine-rest
+  rabbitmq:
+    host: localhost
+    port: 5672
+
+logging:
+  level:
+    root: info
+    com.oshaked.camunda: debug

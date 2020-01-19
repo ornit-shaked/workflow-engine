@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.oshaked'
+version '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compile files('C://projects/other/workflow-embedded-engine/workflow-embedded-engine-client/build/libs/workflow-embedded-engine-client-0.0.1-SNAPSHOT.jar')
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //compile 'org.springframework.boot:spring-boot-starter-actuator'
+    compile 'org.flowable:flowable-spring-boot-starter-rest:6.4.0'
+
+
+    //compile 'org.flowable:flowable-spring-boot-starter:6.4.1'
+    //compile 'org.flowable:flowable-spring-boot-starter-actuator:6.4.1'
+    //compileOnly 'org.projectlombok:lombok'
+    //compile 'mysql:mysql-connector-java'
+
+    runtime "com.h2database:h2"
+    runtimeOnly('org.mariadb.jdbc:mariadb-java-client')
+
+
+
+    //compile 'com.flowable.work:flowable-work-frontend'
+}
