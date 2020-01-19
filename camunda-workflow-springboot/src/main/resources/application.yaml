@@ -8,8 +8,6 @@ spring.datasource:
 spring.h2.console.enabled: true
 
 ccamunda.bpm:
-  webapp:
-    enabled: false
   admin-user:
     id: demo
     password: demo
