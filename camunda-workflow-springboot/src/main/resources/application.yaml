@@ -7,7 +7,7 @@ spring.datasource:
   driverClassName: org.h2.Driver
 spring.h2.console.enabled: true
 
-ccamunda.bpm:
+camunda.bpm:
   admin-user:
     id: demo
     password: demo
