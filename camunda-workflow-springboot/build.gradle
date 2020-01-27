@@ -21,8 +21,7 @@ dependencies {
 
     implementation 'org.camunda.bpm:camunda-engine:7.11.0'
     implementation 'org.camunda.bpm:camunda-engine-spring:7.11.0'
-    //compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:3.2.0"
-    //compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest:3.2.0"
+    compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:3.2.0"
 
     compile 'org.springframework.boot:spring-boot-starter-jdbc'
     compile "com.h2database:h2"

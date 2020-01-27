@@ -18,7 +18,7 @@ public class OnStartupApp implements
     @Autowired
     RepositoryService repositoryService;
 
-    public BpmnModelInstance modelInstance2;
+    public BpmnModelInstance modelInstance;
     public Definitions definitions;
     public Process process;
 
@@ -29,12 +29,12 @@ public class OnStartupApp implements
 
     private void createFlow() {
 
-        modelInstance2 = Bpmn.createEmptyModel();
-        definitions = modelInstance2.newInstance(Definitions.class);
+        modelInstance = Bpmn.createEmptyModel();
+        definitions = modelInstance.newInstance(Definitions.class);
         definitions.setTargetNamespace("http://bpmn.io/schema/bpmn");
         definitions.setName("definitionName");
         definitions.setId("definitionId");
-        modelInstance2.setDefinitions(definitions);
+        modelInstance.setDefinitions(definitions);
 
         // create process
         Process process = createElement(definitions, "initiate2", Process.class);
@@ -56,14 +56,14 @@ public class OnStartupApp implements
         createSequenceFlow(process, task1, join);
         createSequenceFlow(process, join, endEvent);
 
-        Bpmn.validateModel(modelInstance2);
+        Bpmn.validateModel(modelInstance);
 
         Deployment deployment = repositoryService
-                .createDeployment().name("modelInstance2")
-                .addModelInstance("initiate2.bpmn", modelInstance2).deployWithResult();
+                .createDeployment().name("modelInstance")
+                .addModelInstance("initiate2.bpmn", modelInstance).deployWithResult();
         System.out.println("process 2 deployed! " + deployment.getId());
 
-        System.out.println(Bpmn.convertToString(modelInstance2));
+        System.out.println(Bpmn.convertToString(modelInstance));
     }
 
     protected <T extends BpmnModelElementInstance> T createElement(
@@ -71,7 +71,7 @@ public class OnStartupApp implements
             String id,
             Class<T> elementClass) {
 
-        T element = modelInstance2.newInstance(elementClass);
+        T element = modelInstance.newInstance(elementClass);
         element.setAttributeValue("id", id, true);
         parentElement.addChildElement(element);
         return element;
