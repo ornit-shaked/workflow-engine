@@ -1,4 +1,4 @@
-server.port: 8081
+server.port: 8082
 
 spring.datasource:
   url: jdbc:h2:mem:camunda
@@ -8,8 +8,6 @@ spring.datasource:
 spring.h2.console.enabled: true
 
 ccamunda.bpm:
-  webapp:
-    enabled: false
   admin-user:
     id: demo
     password: demo

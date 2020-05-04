@@ -20,9 +20,11 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.boot:spring-boot-starter-amqp"
-    
-    compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp:3.2.0"
-    compile "org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest:3.2.0"
+    implementation'org.springframework.kafka:spring-kafka'
+
+    compile 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-webapp-core:3.4.1'
+    //Camunda Cockpit
+    implementation 'org.camunda.bpm.webapp:camunda-webapp-webjar:7.12.0'
 
     compileOnly 'org.projectlombok:lombok'
 
