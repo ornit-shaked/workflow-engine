@@ -11,13 +11,10 @@ camunda.bpm:
 spring:
   application:
     name: wf
-#  jersey:
-#    application-path: engine-rest
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#
-#logging:
-#  level:
-#    root: info
-#    com.oshaked.camunda: debug
+
+kafka:
+  address: 172.21.180.31:9092
+  enabled: true
+  topic:
+    wf:
+      receiver: wetest6
