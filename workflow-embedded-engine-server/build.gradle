@@ -15,9 +15,8 @@ repositories {
 }
 
 dependencies {
-
-    compile files('C://projects/other/workflow-embedded-engine/workflow-embedded-engine-client/build/libs/workflow-embedded-engine-client-0.0.1-SNAPSHOT.jar')
-
+    
+    implementation project(':workflow-embedded-engine-client')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.boot:spring-boot-starter-amqp"
     implementation'org.springframework.kafka:spring-kafka'
